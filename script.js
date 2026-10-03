@@ -63,6 +63,10 @@ function nextEvent(){
 // Countdown to the next event
 function updateCountdown() {
   const next = nextEvent();
+  if (next == null) {
+      document.getElementById("countdown").textContent = "No upcoming events";
+      return;
+  }
   const ms = new Date(`${next.date}T${next.time}`) - new Date();
   const days = Math.floor(ms / 86400000);
   const hours = Math.floor((ms % 86400000) / 3600000);
