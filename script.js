@@ -62,7 +62,7 @@ function nextEvent(){
 
 // Countdown to the next event
 function updateCountdown() {
-  const next = nextEvent();
+  const next = nextEvent(); //moves to next event after the date of current event has passed
   if (next == null) {
       document.getElementById("countdown").textContent = "No upcoming events";
       return;
