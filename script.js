@@ -1,6 +1,7 @@
 const nav = document.querySelector(".nav");
 const menuButton = document.querySelector(".menu-button");
 const themeToggle = document.querySelector(".theme-toggle");
+const currentDate = new Date(); //takes the current date
 
 // Mobile menu
 menuButton.addEventListener("click", () => {
@@ -31,7 +32,7 @@ function formatDate(event) {
 }
 
 function renderEvents(type) {
-  const now = new Date();
+  const now = currentDate;
   list.innerHTML = EVENTS
     .filter((e) => type === "All" || e.type === type)
     .map((e) => {
@@ -55,10 +56,15 @@ document.querySelectorAll(".filter").forEach((button) => {
 
 renderEvents("All");
 
+//function to find the next event in countdown
+function nextEvent(){
+  return EVENTS.find(event => new Date(`${event.date}T${event.time}`) > currentDate) || null;
+}
+
 // Countdown to the next event
 function updateCountdown() {
-  const next = EVENTS[0];
-  const ms = new Date(`${next.date}T${next.time}`) - new Date();
+  const next = nextEvent();
+  const ms = new Date(`${next.date}T${next.time}`) - currentDate;
   const days = Math.floor(ms / 86400000);
   const hours = Math.floor((ms % 86400000) / 3600000);
   document.getElementById("countdown").textContent = `${next.title} in ${days} days, ${hours} hours`;
